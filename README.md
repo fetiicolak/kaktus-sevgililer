@@ -6,9 +6,13 @@ Sevgilinizle birlikte çölü aşın, akrepleri yumruklayın, altınları toplay
 
 ![Oyun görüntüsü](screenshot.jpg)
 
+🕹 **Hemen oyna:** https://fetiicolak.github.io/kaktus-sevgililer/
+
 ## 🎮 Nasıl Oynanır?
 
-Oynamak için `index.html` dosyasını tarayıcıda açmanız yeterli — internet, kurulum, ek dosya gerekmez.
+Yukarıdaki linkten tarayıcıda oynayın ya da `index.html` dosyasını indirip açın — kurulum, ek dosya gerekmez.
+
+**📱 Mobil & tablet desteği:** Dokunmatik cihazlarda ekran köşelerinde kontroller belirir — sol köşe 1. oyuncu, sağ köşe 2. oyuncu. Telefonu yatay tutun, tam ekran düğmesine (⛶) dokunun ve bir tablette yan yana oturup birlikte oynayın!
 
 | | 🤠 1. Oyuncu | 🌸 2. Oyuncu |
 |---|---|---|

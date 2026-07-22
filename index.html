@@ -2,8 +2,12 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Kaktüs Sevgililer — iki kişilik, tek klavyede oynanan vahşi batı platform macerası.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="description" content="Kaktüs Sevgililer — iki kişilik, tek ekranda oynanan vahşi batı platform macerası.">
+<meta name="theme-color" content="#1d120a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Kaktüs Sevgililer — Çöl Macerası</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌵</text></svg>">
 <style>
@@ -92,6 +96,57 @@
   .stats b{color:#ffd76a;}
   .heartline{font-size:26px;letter-spacing:4px;margin-bottom:8px;}
   .credit{position:absolute;bottom:10px;width:100%;text-align:center;font-size:12.5px;color:#a08658;}
+
+  /* ---------- Mobil / dokunmatik ---------- */
+  *{-webkit-tap-highlight-color:transparent;}
+  @media (max-width:1050px), (max-height:640px){
+    #frame{padding:7px;border-radius:10px;}
+    .overlay{inset:7px;}
+    h1{font-size:34px;} h2{font-size:26px;}
+    .sub{font-size:15px;margin-bottom:10px;}
+    .controls{gap:14px;margin-bottom:8px;}
+    .ctl{min-width:180px;padding:8px 12px;}
+    .ctl h3{font-size:15px;} .ctl table{font-size:12.5px;}
+    .names{gap:10px;margin-bottom:10px;}
+    .nameBox input{width:140px;font-size:15px;padding:4px 8px;}
+    button{font-size:19px;padding:9px 32px;}
+    .tip{font-size:11px;margin-top:8px;}
+    .credit{display:none;}
+  }
+  #touchUI{display:none;}
+  body.touch #touchUI{display:block;}
+  .tbtn{
+    position:fixed;z-index:40;
+    width:62px;height:62px;border-radius:50%;
+    background:rgba(58,36,16,.45);
+    border:2.5px solid rgba(255,215,106,.55);
+    color:#f7ecd4;font-size:24px;font-family:Georgia,serif;
+    display:flex;align-items:center;justify-content:center;
+    touch-action:none;user-select:none;-webkit-user-select:none;
+  }
+  .tbtn.on{background:rgba(255,215,106,.5);color:#3a2410;}
+  .tbtn.pk2{border-color:rgba(255,158,198,.65);}
+  .tbtn.pk2.on{background:rgba(255,158,198,.55);}
+  .tbtn small{position:absolute;bottom:-16px;font-size:10px;color:rgba(247,236,212,.65);white-space:nowrap;}
+  .sysbtn{
+    position:fixed;z-index:40;top:8px;
+    width:42px;height:42px;border-radius:10px;
+    background:rgba(58,36,16,.45);border:2px solid rgba(168,118,61,.6);
+    color:#f7ecd4;font-size:19px;
+    display:flex;align-items:center;justify-content:center;
+    touch-action:none;user-select:none;-webkit-user-select:none;
+  }
+  #rotateHint{
+    display:none;position:fixed;inset:0;z-index:100;
+    background:rgba(20,10,4,.94);color:#f7ecd4;
+    flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;font-size:20px;gap:14px;padding:24px;
+  }
+  #rotateHint .ph{font-size:52px;animation:rotph 1.6s ease-in-out infinite;}
+  @keyframes rotph{0%,25%{transform:rotate(0);}60%,100%{transform:rotate(90deg);}}
+  @media (orientation: portrait) and (pointer: coarse){
+    #rotateHint{display:flex;}
+  }
 </style>
 </head>
 <body>
@@ -150,8 +205,29 @@
 
   <div id="pause" class="overlay hidden">
     <h2>⏸ Mola</h2>
-    <div class="sub">Devam etmek için <kbd>P</kbd>'ye bas</div>
+    <div class="sub">Devam etmek için <kbd>P</kbd>'ye bas veya ⏸ düğmesine dokun</div>
   </div>
+</div>
+
+<div id="rotateHint">
+  <div class="ph">📱</div>
+  <div>En iyi deneyim için telefonunuzu<br><b>yatay çevirin</b> 🌵</div>
+</div>
+
+<div id="touchUI">
+  <!-- 1. Oyuncu (sol) -->
+  <div class="tbtn" data-key="KeyA"  style="left:10px;  bottom:12px;">◀<small>1P</small></div>
+  <div class="tbtn" data-key="KeyD"  style="left:82px;  bottom:12px;">▶</div>
+  <div class="tbtn" data-key="KeyW"  style="left:18px;  bottom:88px;">⤒<small>zıpla</small></div>
+  <div class="tbtn" data-key="KeyS"  style="left:90px;  bottom:88px;">👊<small>saldır</small></div>
+  <!-- 2. Oyuncu (sağ) -->
+  <div class="tbtn pk2" data-key="ArrowRight" style="right:10px; bottom:12px;">▶<small>2P</small></div>
+  <div class="tbtn pk2" data-key="ArrowLeft"  style="right:82px; bottom:12px;">◀</div>
+  <div class="tbtn pk2" data-key="ArrowUp"    style="right:18px; bottom:88px;">⤒<small>zıpla</small></div>
+  <div class="tbtn pk2" data-key="KeyL"       style="right:90px; bottom:88px;">👊<small>saldır</small></div>
+  <!-- sistem düğmeleri -->
+  <div class="sysbtn" id="btnPauseT" style="right:8px;">⏸</div>
+  <div class="sysbtn" id="btnFS" style="right:58px;">⛶</div>
 </div>
 
 <script>
@@ -168,11 +244,15 @@ const GRAV = 2300;
 /* ---------- Ekrana sığdır ---------- */
 const frameEl = document.getElementById('frame');
 function fitScreen(){
-  const s = Math.min((innerWidth-16)/(W+28), (innerHeight-16)/(H+28));
+  const fw = frameEl.offsetWidth || (W+28);
+  const fh = frameEl.offsetHeight || (H+28);
+  const s = Math.min((innerWidth-8)/fw, (innerHeight-8)/fh);
   frameEl.style.transform = 'scale(' + Math.min(s, 1.6) + ')';
 }
 addEventListener('resize', fitScreen);
+addEventListener('orientationchange', ()=>setTimeout(fitScreen, 250));
 fitScreen();
+setTimeout(fitScreen, 100);
 
 /* ---------- Ses (WebAudio, dosyasız) ---------- */
 let AC = null, muted = false;
@@ -403,7 +483,18 @@ function loadLevel(i){
   levelIndex = i;
   const L = LEVELS[i];
   const mapRows = preprocessMap(L.map, L.pits);
-  level = { map: mapRows, name: L.name, rows: mapRows.length, cols: Math.max(...mapRows.map(r=>r.length)), texts: L.texts||[] };
+  level = { map: mapRows, name: L.name, rows: mapRows.length, cols: Math.max(...mapRows.map(r=>r.length)), texts: (L.texts||[]).map(s=>({...s})) };
+  // dokunmatik cihazlarda eğitim yazılarını düğmelere göre değiştir
+  try{
+    if(isTouchDevice){
+      for(const s of level.texts){
+        s.t = s.t
+          .replace('🤠 A-D  /  ◀ ▶  ile yürü', '🤠 Köşedeki ◀ ▶ ile yürü')
+          .replace('W  /  ▲  ile zıpla!', '⤒ düğmesiyle zıpla!')
+          .replace('S  /  L  ile saldır!', '👊 düğmesiyle saldır!');
+      }
+    }
+  }catch(e){}
   enemies=[]; coins=[]; pickups=[]; checkpoints=[]; particles=[]; floatTexts=[]; flag=null;
   coinsGot = 0; levelTime = 0; scoreAtLevelStart = score;
   let s1=null, s2=null;
@@ -1550,6 +1641,39 @@ $('btnStart').onclick = startGame;
 $('btnNext').onclick = nextLevel;
 $('btnRetry').onclick = retryLevel;
 $('btnAgain').onclick = ()=>{ hideAll(); startGame(); };
+
+/* ---------- Dokunmatik kontroller ---------- */
+const isTouchDevice = matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+if(isTouchDevice){
+  document.body.classList.add('touch');
+  document.querySelectorAll('.tbtn[data-key]').forEach(b=>{
+    const k = b.dataset.key;
+    const press = e=>{ e.preventDefault(); b.classList.add('on'); keys[k] = true; audio(); };
+    const release = e=>{ e.preventDefault(); b.classList.remove('on'); keys[k] = false; };
+    b.addEventListener('pointerdown', press);
+    b.addEventListener('pointerup', release);
+    b.addEventListener('pointercancel', release);
+    b.addEventListener('pointerleave', release);
+    b.addEventListener('contextmenu', e=>e.preventDefault());
+  });
+  $('btnPauseT').addEventListener('pointerdown', e=>{ e.preventDefault(); togglePause(); });
+  const fsBtn = $('btnFS');
+  if(document.documentElement.requestFullscreen){
+    fsBtn.addEventListener('pointerdown', e=>{
+      e.preventDefault();
+      try{
+        if(document.fullscreenElement) document.exitFullscreen();
+        else document.documentElement.requestFullscreen();
+      }catch(err){}
+      setTimeout(fitScreen, 350);
+    });
+  }else{
+    fsBtn.style.display = 'none';
+  }
+  // menü ipuçlarını dokunmatiğe göre güncelle
+  const tip = document.querySelector('#menu .tip');
+  if(tip) tip.innerHTML = '📱 Dokunmatik kontroller hazır! Sol köşe 1. oyuncu, sağ köşe 2. oyuncu · 💛 Yere düşen sevgilinizin yanında durup onu canlandırın!';
+}
 
 // Menüdeyken arka planda 1. bölümü sessizce göster (dekor)
 loadLevel(0);
